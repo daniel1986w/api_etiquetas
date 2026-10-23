@@ -1,0 +1,6 @@
+Plaintext
+fastapi
+uvicorn
+pymongo
+dnspython
+pydantic
