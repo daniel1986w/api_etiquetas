@@ -6,7 +6,6 @@ from typing import Optional
 
 app = FastAPI(title="API Sistema de Etiquetas")
 
-# Pega a URI das variáveis de ambiente salvas no Render
 MONGO_URI = os.getenv("MONGO_URI")
 
 if not MONGO_URI:
@@ -77,13 +76,11 @@ def verificar_licenca(payload: LicencaCheckSchema):
     hwid = payload.hwid.strip()
     serial = payload.serial.strip() if payload.serial else None
 
-    # 1. Verifica se o HWID já está ativado
     if hwid and hwid != "DESCONHECIDO":
         lic_ativa = colecao_licencas.find_one({"hwid": hwid, "status": "ativo"})
         if lic_ativa:
             return {"autorizado": True, "mensagem": "Computador autorizado"}
 
-    # 2. Se informou um Serial, tenta ativar
     if serial:
         licenca = colecao_licencas.find_one({"serial": serial, "status": "ativo"})
         if not licenca:
