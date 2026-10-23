@@ -1,19 +1,16 @@
 import os
-import subprocess
 from fastapi import FastAPI, HTTPException, Query
 from pydantic import BaseModel
 from pymongo import MongoClient
-from typing import Optional, List
+from typing import Optional
 
 app = FastAPI(title="API Sistema de Etiquetas")
 
-# Pega a MONGO_URI das variáveis de ambiente do servidor na nuvem
-# Se estiver testando localmente e não tiver variável, usa a sua URI fixa
+# Pega a URI das variáveis de ambiente salvas no Render
 MONGO_URI = os.getenv("MONGO_URI")
 
 if not MONGO_URI:
     raise ValueError("A variável de ambiente MONGO_URI não foi configurada.")
-)
 
 client = MongoClient(MONGO_URI)
 db = client["sistema_etiquetas"]
