@@ -9,9 +9,10 @@ app = FastAPI(title="API Sistema de Etiquetas")
 
 # Pega a MONGO_URI das variáveis de ambiente do servidor na nuvem
 # Se estiver testando localmente e não tiver variável, usa a sua URI fixa
-MONGO_URI = os.getenv(
-    "MONGO_URI",
-    "mongodb+srv://daniel1986w_db_user:UAJ5SjmRVldOyoYS@alpha.zcfrdqe.mongodb.net/sistema_etiquetas?retryWrites=true&w=majority"
+MONGO_URI = os.getenv("MONGO_URI")
+
+if not MONGO_URI:
+    raise ValueError("A variável de ambiente MONGO_URI não foi configurada.")
 )
 
 client = MongoClient(MONGO_URI)
